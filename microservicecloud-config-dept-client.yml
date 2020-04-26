@@ -1,0 +1,89 @@
+spring:   
+    profiles:    
+        active:    
+        - dev
+--- 
+server:  
+    port: 8001
+spring:    
+    profiles: dev   
+    application:     
+        name: microservicecloud-config-dept-client   
+    datasource:    
+        type: com.alibaba.druid.pool.DruidDataSource 
+        driver-class-name: com.mysql.jdbc.Driver    
+        url: jdbc:mysql://localhost:3306/study01?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&verifyServerCertificate=false&useSSL=false&allowPublicKeyRetrieval=true    
+        username: root    
+        password: root    
+        initialSize: 5  #初始化时建立物理连接的个数
+        minIdle: 5      #最小连接池数量
+        maxActive: 20     #最大连接池数量
+        maxWait: 60000    #获取连接时最大等待时间
+        timeBetweenEvictionRunsMillis: 60000    # Destroy线程会检测连接的间隔时间 2)testWhileIdle的判断依据
+        minEvictableIdleTimeMillis: 300000
+        validationQuery: SELECT 1 FROM DUAL   #用来检测连接是否有效的sql
+        testWhileIdle: true           #。申请连接的时候检测，如果空闲时间大于timeBetweenEvictionRunsMillis，执行validationQuery检测连接是否有效
+        testOnBorrow: false         #申请连接时执行validationQuery检测连接是否有效，做了这个配置会降低性能。
+        testOnReturn: false       #归还连接时执行validationQuery检测连接是否有效，做了这个配置会降低性能
+        poolPreparedStatements: true    #是否缓存preparedStatement，也就是PSCache。PSCache对支持游标的数据库性能提升巨大
+mybatis:  
+   mapper-locations: classpath:mybatis/mapper/*.xml
+   type-aliases-package: com.gxs.springcloud.entities
+   config-location: classpath:mybatis/mybatis.cfg.xml
+eureka:   
+    client: #客户端注册进eureka服务列表内    
+        service-url:       
+            defaultZone: http://eureka7001.com:7001/eureka  
+    instance:    
+        instance-id: dept-8001.com    
+        prefer-ip-address: true
+           
+info:  
+    app.name: atguigu-microservicecloud-springcloudconfig01  
+    company.name: www.atguigu.com  
+    build.artifactId: $project.artifactId$  
+    build.version: $project.version$
+    
+---
+server:  
+    port: 8001
+spring:    
+    profiles: test   
+    application:     
+        name: microservicecloud-config-dept-client   
+     datasource:    
+        type: com.alibaba.druid.pool.DruidDataSource 
+        driver-class-name: com.mysql.jdbc.Driver    
+        url: jdbc:mysql://localhost:3306/study02?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&verifyServerCertificate=false&useSSL=false&allowPublicKeyRetrieval=true    
+        username: root    
+        password: root    
+        initialSize: 5  #初始化时建立物理连接的个数
+        minIdle: 5      #最小连接池数量
+        maxActive: 20     #最大连接池数量
+        maxWait: 60000    #获取连接时最大等待时间
+        timeBetweenEvictionRunsMillis: 60000    # Destroy线程会检测连接的间隔时间 2)testWhileIdle的判断依据
+        minEvictableIdleTimeMillis: 300000
+        validationQuery: SELECT 1 FROM DUAL   #用来检测连接是否有效的sql
+        testWhileIdle: true           #。申请连接的时候检测，如果空闲时间大于timeBetweenEvictionRunsMillis，执行validationQuery检测连接是否有效
+        testOnBorrow: false         #申请连接时执行validationQuery检测连接是否有效，做了这个配置会降低性能。
+        testOnReturn: false       #归还连接时执行validationQuery检测连接是否有效，做了这个配置会降低性能
+        poolPreparedStatements: true    #是否缓存preparedStatement，也就是PSCache。PSCache对支持游标的
+            
+mybatis:  
+   mapper-locations: classpath:mybatis/mapper/*.xml
+   type-aliases-package: com.gxs.springcloud.entities
+   config-location: classpath:mybatis/mybatis.cfg.xml
+    
+eureka:   
+    client: #客户端注册进eureka服务列表内    
+        service-url:       
+            defaultZone: http://eureka7001.com:7001/eureka  
+    instance:    
+        instance-id: dept-8001.com    
+        prefer-ip-address: true
+        
+info:  
+    app.name: atguigu-microservicecloud-springcloudconfig02  
+    company.name: www.atguigu.com  
+    build.artifactId: $project.artifactId$  
+    build.version: $project.version$
